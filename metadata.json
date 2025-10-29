@@ -1,0 +1,7 @@
+{
+  "name": "Smile Hair AI Coach",
+  "description": "A personalized AI assistant for hair transplant patients to guide them through the post-operation recovery process with a care calendar, AI chatbot, and photo analysis.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
