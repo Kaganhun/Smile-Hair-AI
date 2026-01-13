@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smile Hair AI Coach</title>
+    <title>YSF Hair Clinic</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="importmap">
       {
@@ -42,9 +42,23 @@
       .animate-slide-in-from-left { animation: slide-in-from-left 0.4s ease-out forwards; }
       .animate-slide-in-from-right { animation: slide-in-from-right 0.4s ease-out forwards; }
       .animate-scale-in { animation: scale-in 0.4s ease-out forwards; }
+      
+      /* Custom Date Picker Styling */
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+      }
     </style>
   </head>
-  <body class="bg-slate-50 dark:bg-slate-900">
+  <body class="bg-gray-100 dark:bg-slate-900">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

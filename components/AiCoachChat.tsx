@@ -119,19 +119,20 @@ const AiCoachChat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-150px)]">
-      <div className="flex-grow overflow-y-auto pr-2 space-y-4">
+      <div className="flex-grow overflow-y-auto pr-2 space-y-4 py-2">
         {messages.map((msg, index) => (
           <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end animate-slide-in-from-right' : 'justify-start animate-slide-in-from-left'}`}>
-            <div className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-2xl ${msg.role === 'user' ? 'bg-emerald-500 text-white rounded-br-none' : 'bg-white text-slate-700 rounded-bl-none shadow-sm'}`}>
+            <div className={`max-w-[85%] px-5 py-3 rounded-2xl shadow-sm text-sm md:text-base leading-relaxed ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-slate-700 rounded-bl-none border border-slate-100'}`}>
               <p className="whitespace-pre-wrap">{msg.parts[0].text}</p>
               {msg.sources && msg.sources.length > 0 && (
-                <div className="mt-3 border-t pt-2">
+                <div className="mt-3 border-t border-slate-100 pt-2">
                     <h4 className="text-xs font-bold mb-1 text-slate-500">Kaynaklar:</h4>
                     <ul className="space-y-1">
                         {msg.sources.map((source, i) => (
                             <li key={i}>
-                                <a href={source.uri} target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-700 hover:underline break-all">
-                                    {i + 1}. {source.title}
+                                <a href={source.uri} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline break-all flex items-center gap-1">
+                                    <GlobeIcon className="w-3 h-3" />
+                                    {source.title}
                                 </a>
                             </li>
                         ))}
@@ -143,33 +144,36 @@ const AiCoachChat: React.FC = () => {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-white text-slate-700 rounded-2xl rounded-bl-none shadow-sm p-4 animate-pulse">
+            <div className="bg-white text-slate-700 rounded-2xl rounded-bl-none shadow-sm p-4 animate-pulse border border-slate-100">
               <LoadingSpinner />
             </div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
-      <div className="mt-4 border-t pt-4 bg-slate-50">
-        <div className="flex items-center space-x-2 bg-white rounded-full shadow-md p-2 focus-within:ring-2 focus-within:ring-emerald-400 transition-shadow">
+      
+      <div className="mt-4 pt-2">
+        <div className="flex items-center space-x-2 bg-white rounded-3xl shadow-lg border border-slate-100 p-2 focus-within:ring-2 focus-within:ring-blue-400 focus-within:border-blue-400 transition-all">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Sorunuzu yazın..."
-            className="w-full bg-transparent focus:outline-none px-4"
+            className="w-full bg-transparent focus:outline-none px-4 py-2 text-slate-700"
             disabled={isLoading}
           />
-          <button onClick={handleWebSearch} disabled={isLoading} className="p-2 text-slate-500 hover:text-blue-500 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50" title="Web'de Ara (Güncel Bilgi)">
-            <GlobeIcon />
-          </button>
-          <button onClick={handleComplexQuery} disabled={isLoading} className="p-2 text-slate-500 hover:text-purple-500 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50" title="Karmaşık Soru Sor (Daha Yavaş)">
-            <SparklesIcon />
-          </button>
-          <button onClick={handleSend} disabled={isLoading} className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50">
-            <SendIcon />
-          </button>
+          <div className="flex items-center space-x-1 pr-1">
+            <button onClick={handleWebSearch} disabled={isLoading} className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-200 disabled:opacity-50" title="Web'de Ara">
+              <GlobeIcon />
+            </button>
+            <button onClick={handleComplexQuery} disabled={isLoading} className="p-2 text-slate-400 hover:text-purple-500 hover:bg-purple-50 rounded-full transition-all duration-200 disabled:opacity-50" title="Detaylı Analiz">
+              <SparklesIcon />
+            </button>
+            <button onClick={handleSend} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2.5 shadow-md transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50">
+              <SendIcon />
+            </button>
+          </div>
         </div>
       </div>
     </div>

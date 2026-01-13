@@ -3,6 +3,7 @@ import { editImage } from '../services/geminiService';
 import CameraIcon from './icons/CameraIcon';
 import LoadingSpinner from './ui/LoadingSpinner';
 import WandIcon from './icons/WandIcon';
+import PaletteIcon from './icons/PaletteIcon';
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -70,23 +71,23 @@ const ImageEditor: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h2 className="text-xl font-bold mb-4 text-slate-700">Görsel Editör (AI Destekli)</h2>
-      <div className="bg-white p-6 rounded-lg shadow-md border border-emerald-100 space-y-6">
+      <h2 className="text-2xl font-bold mb-4 text-slate-900">Görsel Editör (AI Destekli)</h2>
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-50 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div>
-            <label className="block text-sm font-medium text-slate-600 mb-2">1. Fotoğraf Yükle</label>
-            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">1. Fotoğraf Yükle</label>
+            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-xl bg-slate-50 hover:border-blue-400 transition-colors">
               <div className="space-y-1 text-center">
                 {originalImage ? (
-                  <img src={originalImage} alt="Original" className="mx-auto h-32 w-auto rounded-md object-contain animate-scale-in" />
+                  <img src={originalImage} alt="Original" className="mx-auto h-32 w-auto rounded-lg object-contain animate-scale-in shadow-sm" />
                 ) : (
                   <>
-                    <CameraIcon className="mx-auto h-12 w-12 text-slate-400" />
+                    <CameraIcon className="mx-auto h-12 w-12 text-slate-300" />
                     <p className="text-sm text-slate-500">Bir dosya seçin</p>
                   </>
                 )}
                  <div className="flex text-sm text-slate-600 justify-center pt-2">
-                  <label htmlFor="image-editor-file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500">
+                  <label htmlFor="image-editor-file-upload" className="relative cursor-pointer bg-slate-50 rounded-md font-bold text-blue-600 hover:text-blue-500">
                     <span>{originalImage ? 'Değiştir' : 'Gözat'}</span>
                     <input id="image-editor-file-upload" name="file-upload" type="file" className="sr-only" accept="image/*" onChange={handleFileChange} />
                   </label>
@@ -96,40 +97,51 @@ const ImageEditor: React.FC = () => {
           </div>
           
           <div>
-            <label htmlFor="prompt" className="block text-sm font-medium text-slate-600">
+            <label htmlFor="prompt" className="block text-sm font-semibold text-slate-700">
               2. Düzenleme Komutu Girin
             </label>
-            <textarea
-              id="prompt"
-              rows={4}
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2"
-              placeholder="Örn: Retro bir filtre ekle, saçları kırmızı yap, arka planı bulanıklaştır..."
-            />
+             <div className="relative mt-1">
+                <textarea
+                  id="prompt"
+                  rows={4}
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  className="block w-full rounded-xl border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 pr-28 bg-slate-50 resize-none"
+                  placeholder="Örn: Saçları daha gür göster, arka planı bulanıklaştır..."
+                />
+                <button
+                  onClick={() => setPrompt('Bu görseldeki renkleri daha canlı ve doygun hale getir.')}
+                  disabled={isLoading}
+                  className="absolute top-2 right-2 flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 disabled:opacity-50 transition-colors border border-indigo-100"
+                  title="Renkleri Canlandır"
+                >
+                  <PaletteIcon className="w-4 h-4" />
+                  Canlı Renkler
+                </button>
+            </div>
           </div>
         </div>
         
         <button
           onClick={handleSubmit}
           disabled={isLoading || !imageFile || !prompt.trim()}
-          className="w-full flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all duration-200 hover:scale-105 active:scale-100"
+          className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-slate-300 disabled:cursor-not-allowed transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
         >
           {isLoading ? <LoadingSpinner /> : <><WandIcon className="w-5 h-5 mr-2" /> Düzenle</>}
         </button>
       </div>
 
-      {error && <p className="mt-4 text-sm text-red-600 text-center animate-fade-in">{error}</p>}
+      {error && <p className="mt-4 text-sm text-red-600 text-center animate-fade-in bg-red-50 p-2 rounded-lg">{error}</p>}
       
       {(isLoading || editedImage) && (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
           <div className="text-center">
-            <h3 className="font-semibold text-slate-600 mb-2">Orijinal</h3>
-            {originalImage && <img src={originalImage} alt="Original" className="rounded-lg shadow-md w-full" />}
+            <h3 className="font-semibold text-slate-600 mb-3 bg-white inline-block px-3 py-1 rounded-full shadow-sm text-sm">Orijinal</h3>
+            {originalImage && <img src={originalImage} alt="Original" className="rounded-xl shadow-lg w-full border border-slate-100" />}
           </div>
           <div className="text-center">
-            <h3 className="font-semibold text-slate-600 mb-2">Düzenlenmiş</h3>
-            <div className="w-full aspect-square bg-slate-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+            <h3 className="font-semibold text-blue-600 mb-3 bg-blue-50 inline-block px-3 py-1 rounded-full shadow-sm text-sm">Düzenlenmiş</h3>
+            <div className="w-full aspect-square bg-slate-100 rounded-xl shadow-inner flex items-center justify-center overflow-hidden border border-slate-200 relative">
               {isLoading && <LoadingSpinner />}
               {editedImage && <img src={editedImage} alt="Edited" className="rounded-lg w-full h-full object-contain animate-scale-in" />}
             </div>

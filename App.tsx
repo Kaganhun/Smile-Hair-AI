@@ -5,6 +5,7 @@ import CareCalendar from './components/CareCalendar';
 import AiCoachChat from './components/AiCoachChat';
 import StatusCheck from './components/StatusCheck';
 import ImageEditor from './components/ImageEditor';
+import Logo from './components/icons/Logo';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Calendar);
@@ -25,14 +26,27 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
-      <header className="p-4 bg-white shadow-md sticky top-0 z-10">
-        <h1 className="text-2xl font-bold text-center text-emerald-600">
-          Smile Hair AI Coach
-        </h1>
+    <div className="min-h-screen bg-gray-50 text-slate-800 flex flex-col font-sans">
+      <header className="px-6 py-4 bg-white shadow-sm sticky top-0 z-10 border-b border-gray-100">
+        <div className="flex items-center justify-between max-w-2xl mx-auto">
+          <div className="flex items-center space-x-3">
+             <div className="text-blue-600">
+               <Logo className="w-9 h-9" />
+             </div>
+             <div className="flex flex-col">
+                <h1 className="text-lg font-bold text-slate-800 leading-tight tracking-tight">
+                  YSF Hair Clinic
+                </h1>
+                <span className="text-[10px] font-semibold text-blue-500 uppercase tracking-widest">
+                  Patient Companion
+                </span>
+             </div>
+          </div>
+          {/* Optional: Profile Icon or Notification Bell could go here */}
+        </div>
       </header>
       
-      <main className="flex-grow container mx-auto p-4 pb-24">
+      <main className="flex-grow container mx-auto p-4 pb-24 max-w-2xl">
         <div key={activeTab} className="animate-fade-in">
           {renderContent()}
         </div>
