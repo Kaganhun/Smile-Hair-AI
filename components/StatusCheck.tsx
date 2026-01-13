@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { analyzeImage } from '../services/geminiService';
 import CameraIcon from './icons/CameraIcon';
 import LoadingSpinner from './ui/LoadingSpinner';
+import ReactMarkdown from 'react-markdown';
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -53,7 +54,7 @@ const StatusCheck: React.FC = () => {
       };
       
       const response = await analyzeImage(image, prompt || "Lütfen bu fotoğrafı analiz et.");
-      setAnalysisResult(response.text);
+      setAnalysisResult(response.text || '');
 
     } catch (err) {
       console.error("Image analysis failed:", err);
@@ -66,7 +67,7 @@ const StatusCheck: React.FC = () => {
   return (
     <div className="max-w-lg mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-slate-900">Durum Kontrolü (Fotoğraf Analizi)</h2>
-      <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-50 space-y-5">
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-50 space-y-5 transition-colors duration-300">
         <div>
           <label className="block text-sm font-semibold text-slate-700 mb-2">Endişe duyduğunuz bölgenin fotoğrafını yükleyin:</label>
           <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-xl hover:border-blue-400 transition-colors bg-slate-50">
@@ -82,7 +83,7 @@ const StatusCheck: React.FC = () => {
                 </>
               )}
                <div className="flex text-sm text-slate-600 justify-center pt-2">
-                <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-bold text-blue-600 hover:text-blue-500 focus-within:outline-none">
+                <label htmlFor="file-upload" className="relative cursor-pointer bg-transparent rounded-md font-bold text-blue-600 hover:text-blue-500 focus-within:outline-none">
                   <span>{imagePreview ? 'Fotoğrafı Değiştir' : 'Dosya Seç'}</span>
                   <input id="file-upload" name="file-upload" type="file" className="sr-only" accept="image/*" onChange={handleFileChange} />
                 </label>
@@ -100,7 +101,7 @@ const StatusCheck: React.FC = () => {
             rows={3}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 bg-slate-50"
+            className="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 bg-slate-50 text-slate-900 placeholder-slate-400"
             placeholder="Örn: Donör bölgemdeki bu kızarıklık normal mi?"
           />
         </div>
@@ -121,8 +122,8 @@ const StatusCheck: React.FC = () => {
           <h3 className="text-lg font-bold text-blue-800 mb-3 flex items-center gap-2">
              <span className="text-xl">🩺</span> AI Analiz Sonucu
           </h3>
-          <div className="prose prose-sm max-w-none text-slate-600 whitespace-pre-wrap leading-relaxed">
-            {analysisResult}
+          <div className="prose prose-sm max-w-none text-slate-600 leading-relaxed">
+             <ReactMarkdown>{analysisResult}</ReactMarkdown>
           </div>
         </div>
       )}

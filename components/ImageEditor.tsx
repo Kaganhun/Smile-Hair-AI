@@ -72,7 +72,7 @@ const ImageEditor: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-slate-900">Görsel Editör (AI Destekli)</h2>
-      <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-50 space-y-6">
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-50 space-y-6 transition-colors duration-300">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">1. Fotoğraf Yükle</label>
@@ -87,7 +87,7 @@ const ImageEditor: React.FC = () => {
                   </>
                 )}
                  <div className="flex text-sm text-slate-600 justify-center pt-2">
-                  <label htmlFor="image-editor-file-upload" className="relative cursor-pointer bg-slate-50 rounded-md font-bold text-blue-600 hover:text-blue-500">
+                  <label htmlFor="image-editor-file-upload" className="relative cursor-pointer bg-transparent rounded-md font-bold text-blue-600 hover:text-blue-500">
                     <span>{originalImage ? 'Değiştir' : 'Gözat'}</span>
                     <input id="image-editor-file-upload" name="file-upload" type="file" className="sr-only" accept="image/*" onChange={handleFileChange} />
                   </label>
@@ -106,7 +106,7 @@ const ImageEditor: React.FC = () => {
                   rows={4}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  className="block w-full rounded-xl border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 pr-28 bg-slate-50 resize-none"
+                  className="block w-full rounded-xl border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 pr-28 bg-slate-50 text-slate-900 resize-none placeholder-slate-400"
                   placeholder="Örn: Saçları daha gür göster, arka planı bulanıklaştır..."
                 />
                 <button

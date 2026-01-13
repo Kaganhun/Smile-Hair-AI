@@ -35,7 +35,7 @@ const NavItem: React.FC<{
 
 const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around h-20 z-20 pb-4 pt-2">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex justify-around h-20 z-20 pb-4 pt-2 transition-colors duration-300">
       <NavItem
         label="Takvim"
         icon={<CalendarIcon />}

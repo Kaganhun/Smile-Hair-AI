@@ -5,6 +5,7 @@ import SendIcon from './icons/SendIcon';
 import SparklesIcon from './icons/SparklesIcon';
 import LoadingSpinner from './ui/LoadingSpinner';
 import GlobeIcon from './icons/GlobeIcon';
+import ReactMarkdown from 'react-markdown';
 
 const AiCoachChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -119,11 +120,18 @@ const AiCoachChat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-150px)]">
-      <div className="flex-grow overflow-y-auto pr-2 space-y-4 py-2">
+      <div className="flex-grow overflow-y-auto pr-2 space-y-4 py-2 scrollbar-thin scrollbar-thumb-slate-200">
         {messages.map((msg, index) => (
           <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end animate-slide-in-from-right' : 'justify-start animate-slide-in-from-left'}`}>
-            <div className={`max-w-[85%] px-5 py-3 rounded-2xl shadow-sm text-sm md:text-base leading-relaxed ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-slate-700 rounded-bl-none border border-slate-100'}`}>
-              <p className="whitespace-pre-wrap">{msg.parts[0].text}</p>
+            <div className={`max-w-[85%] px-5 py-3 rounded-2xl shadow-sm text-sm md:text-base leading-relaxed ${
+              msg.role === 'user' 
+                ? 'bg-blue-600 text-white rounded-br-none' 
+                : 'bg-white text-slate-700 rounded-bl-none border border-slate-100'
+            }`}>
+              <div className={`prose prose-sm max-w-none ${msg.role === 'user' ? 'prose-invert text-white' : ''}`}>
+                 <ReactMarkdown>{msg.parts[0].text}</ReactMarkdown>
+              </div>
+              
               {msg.sources && msg.sources.length > 0 && (
                 <div className="mt-3 border-t border-slate-100 pt-2">
                     <h4 className="text-xs font-bold mb-1 text-slate-500">Kaynaklar:</h4>
@@ -153,14 +161,14 @@ const AiCoachChat: React.FC = () => {
       </div>
       
       <div className="mt-4 pt-2">
-        <div className="flex items-center space-x-2 bg-white rounded-3xl shadow-lg border border-slate-100 p-2 focus-within:ring-2 focus-within:ring-blue-400 focus-within:border-blue-400 transition-all">
+        <div className="flex items-center space-x-2 bg-white rounded-3xl shadow-lg border border-slate-100 p-2 focus-within:ring-2 focus-within:ring-blue-400 transition-all">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Sorunuzu yazın..."
-            className="w-full bg-transparent focus:outline-none px-4 py-2 text-slate-700"
+            className="w-full bg-transparent focus:outline-none px-4 py-2 text-slate-700 placeholder-slate-400"
             disabled={isLoading}
           />
           <div className="flex items-center space-x-1 pr-1">

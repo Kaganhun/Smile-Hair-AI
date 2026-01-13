@@ -26,8 +26,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-slate-800 flex flex-col font-sans">
-      <header className="px-6 py-4 bg-white shadow-sm sticky top-0 z-10 border-b border-gray-100">
+    <div className="min-h-screen bg-gray-50 text-slate-800 flex flex-col font-sans transition-colors duration-300">
+      <header className="px-6 py-4 bg-white shadow-sm sticky top-0 z-10 border-b border-gray-100 transition-colors duration-300">
         <div className="flex items-center justify-between max-w-2xl mx-auto">
           <div className="flex items-center space-x-3">
              <div className="text-blue-600">

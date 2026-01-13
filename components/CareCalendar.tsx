@@ -33,7 +33,7 @@ const CareCalendar: React.FC = () => {
   if (!opDate) {
     return (
       <div className="flex flex-col items-center justify-center pt-8 px-2 animate-fade-in h-full">
-        <div className="bg-white p-8 rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white w-full max-w-sm text-center relative overflow-hidden">
+        <div className="bg-white p-8 rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white w-full max-w-sm text-center relative overflow-hidden transition-colors duration-300">
           
           {/* Decorative Background Elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-10 -mt-10 z-0"></div>
@@ -84,7 +84,7 @@ const CareCalendar: React.FC = () => {
   return (
     <div className="max-w-xl mx-auto pb-8">
       {/* Header Section */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-8 flex items-center justify-between animate-slide-in-up">
+      <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-8 flex items-center justify-between animate-slide-in-up transition-colors duration-300">
         <div>
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Operasyon Tarihi</p>
           <p className="text-lg font-bold text-slate-800">{opDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
@@ -121,8 +121,12 @@ const CareCalendar: React.FC = () => {
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {/* Timeline Dot/Icon */}
-              <div className={`absolute -left-[14px] top-0 flex items-center justify-center w-7 h-7 rounded-full border-4 border-gray-50 transition-all duration-300 z-10
-                ${isToday ? 'bg-blue-600 scale-125 ring-4 ring-blue-100' : isPast ? 'bg-gray-300' : 'bg-white border-blue-200'}`}>
+              <div className={`absolute -left-[14px] top-0 flex items-center justify-center w-7 h-7 rounded-full border-4 transition-all duration-300 z-10
+                ${isToday 
+                  ? 'bg-blue-600 scale-125 ring-4 ring-blue-100 border-gray-50' 
+                  : isPast 
+                    ? 'bg-gray-300 border-gray-50' 
+                    : 'bg-white border-blue-200'}`}>
                 {isPast ? (
                   <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
